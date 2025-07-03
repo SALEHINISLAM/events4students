@@ -51,7 +51,7 @@ export default function CreateEventPage() {
   return (
     <div data-theme="light" className="">
       <div className="container mx-auto p-2">
-        <h1>Create Event</h1>
+        <h1 className="text-4xl text-center font-bold">Create Event</h1>
         <form action="" onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           {/* Event Basic Information */}
           <div className="bg-white p-6 rounded-lg shadow">

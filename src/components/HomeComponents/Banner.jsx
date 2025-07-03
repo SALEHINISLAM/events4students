@@ -22,6 +22,8 @@ export default function BannerSection() {
             >
               Discover Exciting Student Competitions
             </motion.h1>
+            <p>from</p>
+            <h1 className="text-2xl font-extrabold">Events For Students</h1>
             <motion.p
               className="mb-6"
               initial={{ opacity: 0 }}
