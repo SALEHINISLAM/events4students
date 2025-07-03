@@ -1,0 +1,20 @@
+<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Calendar Outline -->
+  <rect x="6" y="8" width="28" height="28" rx="4" fill="url(#gradient)" />
+  <rect x="6" y="8" width="28" height="28" rx="4" stroke="#1F2937" stroke-width="2" />
+  <!-- Calendar Pins -->
+  <rect x="10" y="4" width="4" height="8" fill="#1F2937" />
+  <rect x="26" y="4" width="4" height="8" fill="#1F2937" />
+  <!-- Star in Center -->
+  <path
+    d="M20 14L21.41 17.59L25 18.14L22.5 20.59L23.18 24L20 22.59L16.82 24L17.5 20.59L15 18.14L18.59 17.59L20 14Z"
+    fill="#FFFFFF"
+  />
+  <!-- Gradient Definition -->
+  <defs>
+    <linearGradient id="gradient" x1="6" y1="8" x2="34" y2="36" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#3B82F6" />
+      <stop offset="1" stop-color="#14B8A6" />
+    </linearGradient>
+  </defs>
+</svg>
