@@ -6,9 +6,9 @@ export default function PublicFooter() {
     <footer className="footer footer-horizontal footer-center bg-base-200 text-base-content rounded p-10">
   <nav className="grid grid-flow-col gap-4">
     <Link href="/about-us" className="link link-hover">About us</Link>
-    <Link href="/contact" className="link link-hover">Contact</Link>
-    <Link href="/jobs" className="link link-hover">Jobs</Link>
-    <Link href="/press-kit" className="link link-hover">Press kit</Link>
+    <Link href="/privacy-policy" className="link link-hover">Privacy policy</Link>
+    <Link href="/terms-and-conditions" className="link link-hover">T&C</Link>
+    <Link href="/update-event" className="link link-hover tooltip" data-tip="Update your event details">Update Event</Link>
   </nav>
   <nav>
     <div className="grid grid-flow-col gap-4">
