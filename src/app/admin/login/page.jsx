@@ -2,13 +2,11 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { signIn } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
 import { motion } from 'motion/react';
 
 export default function AdminLoginPage() {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [error, setError] = useState(null);
-  const router = useRouter();
 
   const onSubmit = async (data) => {
     setError(null); // Clear previous errors
@@ -22,7 +20,7 @@ export default function AdminLoginPage() {
       if (result?.error) {
         setError(result.error);
       } else if (result?.ok) {
-        router.push('/admin');
+        window.location.href = "/admin"
       }
     } catch (error) {
       setError('An unexpected error occurred');

@@ -1,13 +1,11 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 export default function AdminPage() {
   const [unapprovedEvents, setUnapprovedEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const router = useRouter();
 
   useEffect(() => {
     const fetchUnapprovedEvents = async () => {

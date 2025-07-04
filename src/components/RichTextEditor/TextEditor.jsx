@@ -17,6 +17,7 @@ export default function RichTextEditor({ name, control, defaultValue }) {
     name,
     control,
     defaultValue,
+    rules:{ required: "Event description is required" }
   });
   const editor = useEditor({
     extensions: [
@@ -113,6 +114,14 @@ export default function RichTextEditor({ name, control, defaultValue }) {
       attributes: {
         class: "min-h-[156px] border rounded-md bg-slate-50 py-2 px-3",
       },
+      // Add handleKeyDown to prevent Enter from submitting the form
+      handleKeyDown:(view,event)=>{
+        if (event.key ==="Enter" && !event.shiftKey) {
+          // Allow Tiptap to handle Enter for creating new lines/paragraphs
+          return false; // Let Tiptap process the Enter key
+        }
+        return false; // Prevent default behavior for other keys
+      }
     },
     onUpdate: ({ editor }) => {
       console.log(editor.getHTML());

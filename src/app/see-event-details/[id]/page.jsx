@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useParams, useRouter } from "next/navigation";
 import "@/components/CSSFile/styles.scss"
+import ShowEventDetails from "@/components/RichTextEditor/ShowEventDetails";
 
 export default function EventPage() {
   const [event, setEvent] = useState(null);
@@ -77,7 +78,8 @@ export default function EventPage() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
-        className="hero min-h-[50vh] bg-base-200"
+        className="hero min-h-[50vh] bg-base-200 tooltip"
+        data-tip="Click to view full image"
         style={{
           backgroundImage: `url(${event.coverPhotoUrl || "/placeholder.jpg"})`,
           backgroundSize: "cover",
@@ -156,7 +158,7 @@ export default function EventPage() {
       <section className="container mx-auto py-12 px-4">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main Content */}
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-2 order-2 lg:order-1">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -165,9 +167,10 @@ export default function EventPage() {
             >
               <h2 className="text-2xl font-bold mb-4">Event Description</h2>
               <div
-                dangerouslySetInnerHTML={{ __html: event.description }}
-                className="mb-6"
-              />
+                className="mb-6 prose"
+              >
+              <ShowEventDetails detailHTML={event?.description} />
+              </div>
             </motion.div>
 
             {event.eventType && (
@@ -183,7 +186,7 @@ export default function EventPage() {
           </div>
 
           {/* Sidebar with Additional Info */}
-          <div className="lg:col-span-1">
+          <div className="lg:col-span-1 order-1 lg:order-2">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -279,7 +282,7 @@ export default function EventPage() {
       <section className="container mx-auto pb-12 px-4">
         <motion.button
           className="btn btn-outline"
-          onClick={() => router.back()}
+          onClick={() => router.push('/')}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >

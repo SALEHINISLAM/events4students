@@ -1,7 +1,7 @@
 "use client";
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { useForm } from 'react-hook-form';
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
 import RichTextEditor from "@/components/RichTextEditor/TextEditor";
 
 export default function UpdateEventPage() {
@@ -9,49 +9,54 @@ export default function UpdateEventPage() {
   const [step, setStep] = useState(1); // 1 = verify, 2 = edit
   const [eventData, setEventData] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
-  const { 
-    register, 
-    handleSubmit, 
-    control, 
-    reset, 
-    formState: { errors } 
+  const {
+    register,
+    handleSubmit,
+    control,
+    reset,
+    formState: { errors },
   } = useForm();
 
   // Extract event ID from URL
   const extractEventId = (url) => {
     try {
       const urlObj = new URL(url);
-      const pathParts = urlObj.pathname.split('/');
+      const pathParts = urlObj.pathname.split("/");
       return pathParts[pathParts.length - 1];
     } catch (e) {
       return null;
     }
   };
-//https://www.event4student.com/event/68663cb69fca445a243eac1f
+  //https://www.event4student.com/event/68663cb69fca445a243eac1f
   // Verify event and security code
   const verifyEvent = async (data) => {
     try {
       const eventId = extractEventId(data.eventUrl);
-      if (!eventId) throw new Error('Invalid event URL');
+      if (!eventId) throw new Error("Invalid event URL");
 
-      const response = await fetch('/api/verify-user', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/verify-user", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           eventId,
-          securityCode: data.securityCode
+          securityCode: data.securityCode,
         }),
       });
 
       const result = await response.json();
-      if (!response.ok) throw new Error(result.message || 'Verification failed');
+      if (!response.ok)
+        throw new Error(result.message || "Verification failed");
 
       setEventData(result.event);
       setPreviewImage(result.event.coverPhotoUrl);
       reset({
         eventTitle: result.event.title,
-        startDate: result.event.startDate ? new Date(result.event.startDate).toISOString().slice(0, 16) : '',
-        endDate: result.event.endDate ? new Date(result.event.endDate).toISOString().slice(0, 16) : '',
+        startDate: result.event.startDate
+          ? new Date(result.event.startDate).toISOString().slice(0, 16)
+          : "",
+        endDate: result.event.endDate
+          ? new Date(result.event.endDate).toISOString().slice(0, 16)
+          : "",
         eventDescription: result.event.description,
         eventType: result.event.eventType,
         registrationLink: result.event.registrationLink,
@@ -66,7 +71,7 @@ export default function UpdateEventPage() {
       });
       setStep(2);
     } catch (error) {
-      alert(error.message || 'Verification failed. Please check your details.');
+      alert(error.message || "Verification failed. Please check your details.");
     }
   };
 
@@ -85,17 +90,17 @@ export default function UpdateEventPage() {
       }
 
       const response = await fetch(`/api/updateSingleEvents/${eventData._id}`, {
-        method: 'PUT',
+        method: "PUT",
         body: formData,
       });
 
-      if (!response.ok) throw new Error('Update failed');
+      if (!response.ok) throw new Error("Update failed");
 
-      alert('Event updated successfully!');
-      router.push(`/event/${eventData._id}`);
+      alert("Event updated successfully!");
+      //router.push(`/see-event-details/${eventData._id}`);
     } catch (error) {
-      console.error('Update error:', error);
-      alert('Failed to update event');
+      console.error("Update error:", error);
+      alert("Failed to update event");
     }
   };
 
@@ -122,10 +127,14 @@ export default function UpdateEventPage() {
                   type="url"
                   className="w-full p-2 border rounded"
                   placeholder="https://www.event4student.com/event/abc123"
-                  {...register("eventUrl", { required: "Event URL is required" })}
+                  {...register("eventUrl", {
+                    required: "Event URL is required",
+                  })}
                 />
                 {errors.eventUrl && (
-                  <p className="text-red-500 text-xs mt-1">{errors.eventUrl.message}</p>
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.eventUrl.message}
+                  </p>
                 )}
                 <p className="text-xs text-gray-500 mt-1">
                   Paste the full URL of your event
@@ -140,16 +149,18 @@ export default function UpdateEventPage() {
                   type="text"
                   className="w-full p-2 border rounded"
                   placeholder="Enter your 6-digit code"
-                  {...register("securityCode", { 
+                  {...register("securityCode", {
                     required: "Security code is required",
                     pattern: {
                       value: /^[A-Z0-9]{6}$/,
-                      message: "Must be 6 alphanumeric characters"
-                    }
+                      message: "Must be 6 alphanumeric characters",
+                    },
                   })}
                 />
                 {errors.securityCode && (
-                  <p className="text-red-500 text-xs mt-1">{errors.securityCode.message}</p>
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.securityCode.message}
+                  </p>
                 )}
               </div>
 
@@ -165,11 +176,23 @@ export default function UpdateEventPage() {
           </div>
         ) : (
           <div>
-            <h1 className="text-xl font-semibold mb-4">Update Event: {eventData.title}</h1>
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+            <h1 className="text-xl font-semibold mb-4">
+              Update Event: {eventData.title}
+            </h1>
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="space-y-6"
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && e.target.tagName !== "BUTTON") {
+                  e.preventDefault();
+                }
+              }}
+            >
               {/* Event Basic Information */}
               <div className="bg-white p-6 rounded-lg shadow">
-                <h2 className="text-xl font-semibold mb-4">Event Information</h2>
+                <h2 className="text-xl font-semibold mb-4">
+                  Event Information
+                </h2>
 
                 <div className="mb-4">
                   <label className="block text-sm font-medium mb-1">
@@ -179,10 +202,14 @@ export default function UpdateEventPage() {
                     type="text"
                     className="w-full p-2 border rounded"
                     placeholder="Environment Fest"
-                    {...register("eventTitle", { required: "Event title is required" })}
+                    {...register("eventTitle", {
+                      required: "Event title is required",
+                    })}
                   />
                   {errors.eventTitle && (
-                    <p className="text-red-500 text-xs mt-1">{errors.eventTitle.message}</p>
+                    <p className="text-red-500 text-xs mt-1">
+                      {errors.eventTitle.message}
+                    </p>
                   )}
                 </div>
 
@@ -194,10 +221,14 @@ export default function UpdateEventPage() {
                     <input
                       type="datetime-local"
                       className="w-full p-2 border rounded"
-                      {...register("startDate", { required: "Start date is required" })}
+                      {...register("startDate", {
+                        required: "Start date is required",
+                      })}
                     />
                     {errors.startDate && (
-                      <p className="text-red-500 text-xs mt-1">{errors.startDate.message}</p>
+                      <p className="text-red-500 text-xs mt-1">
+                        {errors.startDate.message}
+                      </p>
                     )}
                   </div>
                   <div>
@@ -207,16 +238,22 @@ export default function UpdateEventPage() {
                     <input
                       type="datetime-local"
                       className="w-full p-2 border rounded"
-                      {...register("endDate", { required: "End date is required" })}
+                      {...register("endDate", {
+                        required: "End date is required",
+                      })}
                     />
                     {errors.endDate && (
-                      <p className="text-red-500 text-xs mt-1">{errors.endDate.message}</p>
+                      <p className="text-red-500 text-xs mt-1">
+                        {errors.endDate.message}
+                      </p>
                     )}
                   </div>
                 </div>
 
                 <div className="bg-white mb-4 rounded-lg shadow">
-                  <h2 className="text-xl font-semibold mb-4">Event Description *</h2>
+                  <h2 className="text-xl font-semibold mb-4">
+                    Event Description *
+                  </h2>
                   <RichTextEditor
                     name="eventDescription"
                     control={control}
@@ -276,7 +313,9 @@ export default function UpdateEventPage() {
                         name="eventType"
                         className="mr-2"
                         value="remote"
-                        {...register("eventType", { required: "Event type is required" })}
+                        {...register("eventType", {
+                          required: "Event type is required",
+                        })}
                       />
                       Remote
                     </label>
@@ -302,12 +341,16 @@ export default function UpdateEventPage() {
                     </label>
                   </div>
                   {errors.eventType && (
-                    <p className="text-red-500 text-xs mt-1">{errors.eventType.message}</p>
+                    <p className="text-red-500 text-xs mt-1">
+                      {errors.eventType.message}
+                    </p>
                   )}
                 </div>
 
                 <div className="mb-4">
-                  <label className="block text-sm font-medium mb-1">Location</label>
+                  <label className="block text-sm font-medium mb-1">
+                    Location
+                  </label>
                   <input
                     type="text"
                     className="w-full p-2 border rounded"
@@ -322,7 +365,11 @@ export default function UpdateEventPage() {
                   </label>
                   {previewImage && (
                     <div className="mb-4">
-                      <img src={previewImage} alt="Cover Preview" className="max-w-xs rounded" />
+                      <img
+                        src={previewImage}
+                        alt="Cover Preview"
+                        className="max-w-xs rounded"
+                      />
                     </div>
                   )}
                   <input
@@ -339,7 +386,9 @@ export default function UpdateEventPage() {
               </div>
 
               <div className="bg-white p-6 rounded-lg shadow">
-                <h2 className="text-xl font-semibold mb-4">Organizer Information</h2>
+                <h2 className="text-xl font-semibold mb-4">
+                  Organizer Information
+                </h2>
 
                 <div className="mb-4">
                   <label className="block text-sm font-medium mb-1">
@@ -349,10 +398,14 @@ export default function UpdateEventPage() {
                     type="text"
                     className="w-full p-2 border rounded"
                     placeholder="University of XYZ"
-                    {...register("organizerInstitution", { required: "Organizer is required" })}
+                    {...register("organizerInstitution", {
+                      required: "Organizer is required",
+                    })}
                   />
                   {errors.organizerInstitution && (
-                    <p className="text-red-500 text-xs mt-1">{errors.organizerInstitution.message}</p>
+                    <p className="text-red-500 text-xs mt-1">
+                      {errors.organizerInstitution.message}
+                    </p>
                   )}
                 </div>
 
@@ -433,7 +486,9 @@ export default function UpdateEventPage() {
                         name="isOrganizer"
                         className="mr-2"
                         value="yes"
-                        {...register("isOrganizer", { required: "This field is required" })}
+                        {...register("isOrganizer", {
+                          required: "This field is required",
+                        })}
                       />
                       Yes
                     </label>
@@ -449,7 +504,9 @@ export default function UpdateEventPage() {
                     </label>
                   </div>
                   {errors.isOrganizer && (
-                    <p className="text-red-500 text-xs mt-1">{errors.isOrganizer.message}</p>
+                    <p className="text-red-500 text-xs mt-1">
+                      {errors.isOrganizer.message}
+                    </p>
                   )}
                 </div>
 

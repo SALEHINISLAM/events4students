@@ -3,10 +3,12 @@ import { MongoClient, ObjectId } from 'mongodb';
 
 // Initialize MongoDB connection
 const mongoClient = new MongoClient(process.env.NEXT_MongoURI_KEY);
-const db = mongoClient.db();
 
 export async function POST(request) {
   try {
+    // Connect to MongoDB
+    await mongoClient.connect();
+    const db = mongoClient.db();
     const { eventId, securityCode } = await request.json();
 
     if (!eventId || !securityCode) {

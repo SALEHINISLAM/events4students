@@ -1,5 +1,6 @@
 "use client";
 import RichTextEditor from "@/components/RichTextEditor/TextEditor";
+import Link from "next/link";
 import React from "react";
 import { useForm } from "react-hook-form";
 
@@ -51,7 +52,16 @@ export default function CreateEventPage() {
   return (
     <div data-theme="light" className="">
       <div className="container mx-auto p-2">
-        <h1 className="text-4xl text-center font-bold">Create Event</h1>
+        <h1 className="text-6xl text-center font-extrabold">Create Event</h1>
+        <p className="text-xs text-center">
+          To know more about how we works click on the link below
+        </p>
+        <div className="text-center items-center justify-center">
+          <Link href={"/how-it-works"} className="link btn-link ">
+            How We Works?
+          </Link>
+        </div>
+
         <form action="" onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           {/* Event Basic Information */}
           <div className="bg-white p-6 rounded-lg shadow">

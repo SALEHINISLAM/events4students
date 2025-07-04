@@ -4,7 +4,6 @@ import { BlobServiceClient } from '@azure/storage-blob';
 
 // Initialize MongoDB connection
 const mongoClient = new MongoClient(process.env.NEXT_MongoURI_KEY);
-const db = mongoClient.db();
 
 // Initialize Azure Blob Storage
 const blobServiceClient = BlobServiceClient.fromConnectionString(
@@ -28,6 +27,8 @@ async function uploadToBlob(containerName, file) {
 
 export async function PUT(request,{params}) {
   try {
+    await mongoClient.connect();
+    const db = mongoClient.db();
     const formData = await request.formData();
     const { eventId } = params;
 
