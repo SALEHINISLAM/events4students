@@ -2,8 +2,9 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useParams, useRouter } from "next/navigation";
+import "@/components/CSSFile/styles.scss"
 
-export default function EventPage({ params }) {
+export default function EventPage() {
   const [event, setEvent] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);

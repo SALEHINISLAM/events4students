@@ -2,6 +2,7 @@
 import { NextResponse } from 'next/server';
 import { BlobServiceClient } from '@azure/storage-blob';
 import { MongoClient } from 'mongodb';
+import { randomBytes } from 'crypto';
 
 // Initialize MongoDB connection
 const mongoClient = new MongoClient(process.env.NEXT_MongoURI_KEY);

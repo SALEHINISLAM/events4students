@@ -10,10 +10,17 @@ export async function GET(request) {
   const page = parseInt(searchParams.get('page')) || 1;
   const search = searchParams.get('search') || '';
   const limit = 12;
-
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0'); 
+  const day = String(today.getDate()).padStart(2, '0');
+  const hours = String(today.getHours()).padStart(2, '0');
+  const minutes = String(today.getMinutes()).padStart(2, '0');
+  const todayString = `${year}-${month}-${day}T${hours}:${minutes}`;
+  console.log(todayString);
   try {
     await mongoClient.connect();
-    
+
     const query = {
       adminApproval: true,
       isDeleted: { $ne: true },
@@ -27,20 +34,44 @@ export async function GET(request) {
 
     const events = await db
       .collection('events')
-      .find(query,{
-        projection:{
-            title:1,
-            startDate:1,
-            endDate:1,
-            location:1,
-            coverPhotoUrl:1,
-            isVerified:1,
-            _id:1
-        }
-      })
-      .sort({ startDate: 1, isVerified: -1, createdAt: -1 })
-      .skip((page - 1) * limit)
-      .limit(limit)
+      .aggregate([
+        { $match: query },
+        {
+          $addFields: {
+            isExpired: {
+              $cond: {
+                if: { $gte: ['$endDate', todayString] },
+                then: 0, // Unexpired events
+                else: 1, // Expired events
+              },
+            },
+          },
+        },
+        {
+          $sort: {
+            isExpired: 1, // Unexpired (0) before expired (1)
+            startDate: 1, // Soonest events first
+            isVerified: -1, // Verified events first
+            createdAt: -1, // Newer events first
+          },
+        }, {
+          $skip: (page - 1) * limit,
+        },
+        {
+          $limit: limit,
+        },
+        {
+          $project: {
+            title: 1,
+            startDate: 1,
+            endDate: 1,
+            location: 1,
+            coverPhotoUrl: 1,
+            _id: 1,
+            isExpired: 1, // Include for UI purposes
+          },
+        },
+      ])
       .toArray();
 
     const total = await db.collection('events').countDocuments(query);
@@ -57,7 +88,7 @@ export async function GET(request) {
       { success: false, message: 'Internal server error' },
       { status: 500 }
     );
-  } 
+  }
   finally {
     await mongoClient.close();
   }

@@ -35,7 +35,7 @@ export default function BlogPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-base-100">
+    <div data-theme="light" className="min-h-screen bg-base-100">
       <Head>
         <title>Blog - Event4Student</title>
         <meta
@@ -89,7 +89,7 @@ export default function BlogPage() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <Link href="/events" className="btn btn-primary btn-lg">
+              <Link href="/" className="btn btn-primary btn-lg">
                 Explore Events Now
               </Link>
             </motion.div>
@@ -122,7 +122,7 @@ export default function BlogPage() {
               >
                 <figure>
                   <Image
-                    src={post.image}
+                    src={post.image || 'https://lh3.googleusercontent.com/d/1i0dOoct_qiA185n2aAA-ywrXQBx3kaF1'}
                     alt={post.title}
                     width={400}
                     height={200}
@@ -130,8 +130,8 @@ export default function BlogPage() {
                   />
                 </figure>
                 <div className="card-body">
-                  <h3 className="card-title text-lg">{post.title}</h3>
-                  <p className="text-sm text-gray-600">{post.date}</p>
+                  <h3 className="card-title text-lg text-black">{post.title}</h3>
+                  <p className="text-sm text-gray-800">{post.date}</p>
                   <p className="text-gray-600">{post.excerpt}</p>
                   <div className="card-actions justify-end mt-4">
                     <button className="btn btn-primary btn-sm" disabled>
@@ -166,8 +166,8 @@ export default function BlogPage() {
                 </Link>
               </motion.div>
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Link href="/admin/login" className="btn btn-outline btn-lg">
-                  Become an Organizer
+                <Link href="/create-event" className="btn btn-outline btn-lg">
+                  Post an Event
                 </Link>
               </motion.div>
             </div>

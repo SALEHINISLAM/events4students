@@ -52,7 +52,7 @@ export default function EventsSection() {
   const schemaData = {
     '@context': 'https://schema.org',
     '@type': 'Event',
-    events: events.map((event) => ({
+    events: events?.map((event) => ({
       '@type': 'Event',
       name: event.title,
       startDate: new Date(event.startDate).toISOString(),
@@ -119,7 +119,7 @@ export default function EventsSection() {
           transition={{ duration: 0.5 }}
         >
           <AnimatePresence>
-            {events.map((event) => (
+            {events?.map((event) => (
               <EventCard key={event._id} event={event} />
             ))}
           </AnimatePresence>

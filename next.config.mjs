@@ -16,6 +16,11 @@ const nextConfig = {
                 protocol: 'https',
                 hostname:"scontent.fdac99-1.fna.fbcdn.net",
                 port:"",
+            },
+            {
+                protocol: 'https',
+                hostname:"via.placeholder.com",
+                port:"",
             }
         ]
     }
