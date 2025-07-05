@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useParams, useRouter } from "next/navigation";
-import "@/components/CSSFile/styles.scss"
+import "@/components/CSSFile/styles.scss";
 import ShowEventDetails from "@/components/RichTextEditor/ShowEventDetails";
 import Head from "next/head";
 
@@ -76,7 +76,15 @@ export default function EventPage() {
     <div className="min-h-screen bg-base-100 text-black">
       <Head>
         <title>{event?.title || "See Event Details"}</title>
-        <meta property="og:title" content={event?.title || "See Event Details"} key="title" />
+        <meta
+          property="og:title"
+          content={event?.title || "See Event Details"}
+          key="title"
+        />
+        <meta
+          name="google-adsense-account"
+          content={process.env.NEXT_Google_Adsense_Account}
+        ></meta>
       </Head>
       {/* Hero Section with Cover Image */}
       <motion.section
@@ -171,10 +179,8 @@ export default function EventPage() {
               className="prose max-w-none"
             >
               <h2 className="text-2xl font-bold mb-4">Event Description</h2>
-              <div
-                className="mb-6 prose"
-              >
-              <ShowEventDetails detailHTML={event?.description} />
+              <div className="mb-6 prose">
+                <ShowEventDetails detailHTML={event?.description} />
               </div>
             </motion.div>
 
@@ -287,7 +293,7 @@ export default function EventPage() {
       <section className="container mx-auto pb-12 px-4">
         <motion.button
           className="btn btn-outline"
-          onClick={() => router.push('/')}
+          onClick={() => router.push("/")}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >

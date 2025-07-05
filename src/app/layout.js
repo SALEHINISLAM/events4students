@@ -39,14 +39,12 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <Head>
-          <script async src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_Google_Adsense_Account}`}
-            crossorigin="anonymous"></script>
+      <Head>
           <meta name="google-adsense-account" content={process.env.NEXT_Google_Adsense_Account}></meta>
         </Head>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      > 
         <GoogleTagManager gtmId={process.env.NEXT_Google_Tag_Manager_ID} />
         <PublicNavbar />
         {children}

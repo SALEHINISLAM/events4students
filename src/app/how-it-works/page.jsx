@@ -1,6 +1,7 @@
 "use client";
-import { motion } from 'framer-motion';
-import Link from 'next/link';
+import { motion } from "framer-motion";
+import Head from "next/head";
+import Link from "next/link";
 
 export default function HowItWorks() {
   const steps = [
@@ -96,6 +97,13 @@ export default function HowItWorks() {
 
   return (
     <div className="min-h-screen bg-base-100">
+      <Head>
+        <title>How It Works?</title>
+        <meta
+          name="google-adsense-account"
+          content={process.env.NEXT_Google_Adsense_Account}
+        ></meta>
+      </Head>
       {/* Header */}
       <header className="bg-primary text-white py-12">
         <div className="container mx-auto px-4">
@@ -113,7 +121,8 @@ export default function HowItWorks() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="text-base md:text-lg text-center mt-4 text-gray-200"
           >
-            Discover how easy it is to create and promote your event with Event4Student!
+            Discover how easy it is to create and promote your event with
+            Event4Student!
           </motion.p>
         </div>
       </header>
@@ -174,12 +183,10 @@ export default function HowItWorks() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="text-base md:text-lg text-gray-200 mt-4"
           >
-            Start creating your event today and let Event4Student help you reach a wider audience!
+            Start creating your event today and let Event4Student help you reach
+            a wider audience!
           </motion.p>
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
             <Link
               href="/create-event"
               className="mt-6 btn btn-white"
