@@ -18,7 +18,7 @@ const geistMono = Geist_Mono({
 export const metadata = {
   title: "Event for Student",
   description: "A platform for students to create and participate in events",
-   keywords: 'student events, university events, event management, Events4Students, BUET events, competitions, workshops, seminars, campus activities, hackathon, mechathon, techathon, case competition, research, poster presentation, business competition',
+  keywords: 'student events, university events, event management, Events4Students, BUET events, competitions, workshops, seminars, campus activities, hackathon, mechathon, techathon, case competition, research, poster presentation, business competition',
   openGraph: {
     title: 'Events4Students',
     description: 'The ultimate platform for student event management and discovery.',
@@ -43,12 +43,14 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Head>
+          <script async src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_Google_Adsense_Account}`}
+            crossorigin="anonymous"></script>
           <meta name="google-adsense-account" content={process.env.NEXT_Google_Adsense_Account}></meta>
         </Head>
-        <GoogleTagManager gtmId={process.env.NEXT_Google_Tag_Manager_ID}/>
+        <GoogleTagManager gtmId={process.env.NEXT_Google_Tag_Manager_ID} />
         <PublicNavbar />
         {children}
-        <PublicFooter/>
+        <PublicFooter />
       </body>
     </html>
   );
