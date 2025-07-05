@@ -3,6 +3,7 @@ import "./globals.css";
 import PublicNavbar from "@/components/PublicPageComponents/PublicNavbar";
 import { GoogleTagManager } from '@next/third-parties/google'
 import PublicFooter from "@/components/PublicPageComponents/PublicFooter";
+import Head from "next/head";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -41,7 +42,10 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <GoogleTagManager gtmId="GTM-PW4B48D7"/>
+        <Head>
+          <meta name="google-adsense-account" content={process.env.NEXT_Google_Adsense_Account}></meta>
+        </Head>
+        <GoogleTagManager gtmId={process.env.NEXT_Google_Tag_Manager_ID}/>
         <PublicNavbar />
         {children}
         <PublicFooter/>

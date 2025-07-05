@@ -118,6 +118,7 @@ export default function UpdateEventPage() {
         {step === 1 ? (
           <div className="bg-white p-6 rounded-lg shadow">
             <h1 className="text-xl font-semibold mb-4">Update Event</h1>
+            <p className="text-xs">You can update event only if you post it and have the security code that we provide through email.</p>
             <form onSubmit={handleSubmit(verifyEvent)} className="space-y-6">
               <div className="mb-4">
                 <label className="block text-sm font-medium mb-1">
@@ -126,7 +127,7 @@ export default function UpdateEventPage() {
                 <input
                   type="url"
                   className="w-full p-2 border rounded"
-                  placeholder="https://www.event4student.com/event/abc123"
+                  placeholder="https://www.event4student.com/see-event-details/abc123"
                   {...register("eventUrl", {
                     required: "Event URL is required",
                   })}

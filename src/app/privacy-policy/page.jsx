@@ -88,7 +88,7 @@ export default function PrivacyPage() {
                 <ul className="list-disc pl-6 mt-2">
                   <li>Facilitate event creation, approval, and promotion.</li>
                   <li>Send notifications about event approvals, updates, or new events.</li>
-                  <li>Improve our platform’s functionality and user experience.</li>
+                  <li>Improve our platform&apos;s functionality and user experience.</li>
                   <li>Analyze usage trends to enhance our services.</li>
                   <li>Respond to your inquiries or support requests.</li>
                 </ul>
@@ -128,8 +128,8 @@ export default function PrivacyPage() {
                   <li>Request a copy of your data or restrict its use, where applicable under local laws.</li>
                 </ul>
                 To exercise these rights, contact us at{' '}
-                <a href="mailto:support@event4student.com" className="text-blue-500 hover:underline">
-                  support@event4student.com
+                <a href="mailto:msionlinekingdom@gmail.com" className="text-blue-500 hover:underline">
+                  msionlinekingdom@gmail.com
                 </a>.
               </p>
             </section>
@@ -171,8 +171,8 @@ export default function PrivacyPage() {
               <h2 className="text-2xl font-semibold text-gray-800 mb-4">11. Contact Us</h2>
               <p className="text-gray-600">
                 If you have questions about this Privacy Policy, please contact us at{' '}
-                <a href="mailto:support@event4student.com" className="text-blue-500 hover:underline">
-                  support@event4student.com
+                <a href="mailto:msionlinekingdom@gmail.com" className="text-blue-500 hover:underline">
+                  msionlinekingdom@gmail.com
                 </a>.
               </p>
             </section>

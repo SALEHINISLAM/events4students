@@ -18,10 +18,11 @@
     color: #2563eb;
     cursor: pointer;
     text-decoration: underline;
+    word-wrap: break-word;
 
     &:hover {
       color: darken(#2563eb, 10%);
-    }
+    } 
 
     /* Responsive adjustments */
     @media (max-width: 768px) {

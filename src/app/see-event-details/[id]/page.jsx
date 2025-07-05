@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useParams, useRouter } from "next/navigation";
 import "@/components/CSSFile/styles.scss"
 import ShowEventDetails from "@/components/RichTextEditor/ShowEventDetails";
+import Head from "next/head";
 
 export default function EventPage() {
   const [event, setEvent] = useState(null);
@@ -73,6 +74,10 @@ export default function EventPage() {
 
   return (
     <div className="min-h-screen bg-base-100 text-black">
+      <Head>
+        <title>{event?.title || "See Event Details"}</title>
+        <meta property="og:title" content={event?.title || "See Event Details"} key="title" />
+      </Head>
       {/* Hero Section with Cover Image */}
       <motion.section
         initial={{ opacity: 0 }}
