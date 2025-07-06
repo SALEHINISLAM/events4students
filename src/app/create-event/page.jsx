@@ -9,26 +9,35 @@ export default function CreateEventPage() {
     register,
     handleSubmit,
     control,
+    watch,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      coverPhotoType: "file",
+    },
+  });
 
+  const coverPhotoType = watch("coverPhotoType");
   //submit handler
   const onSubmit = async (data) => {
     console.log(data);
-    // Handle form submission logic here
     try {
       const formData = new FormData();
       for (const key of Object.keys(data)) {
-        if (key === "coverPhoto" || key === "verificationDocument") {
-          // Handle file inputs
+        if (key === "coverPhotoFile" && data.coverPhotoType === "file") {
+          if (data[key] && data[key].length > 0) {
+            formData.append("coverPhoto", data[key][0]);
+          }
+        } else if (key === "coverPhotoUrl" && data.coverPhotoType === "url") {
+          if (data[key]) {
+            formData.append("coverPhoto", data[key]);
+          }
+        } else if (key === "verificationDocument") {
           if (data[key] && data[key].length > 0) {
             formData.append(key, data[key][0]);
           }
-        } else {
-          // Handle regular fields
-          if (data[key] !== undefined && data[key] !== null) {
-            formData.append(key, data[key]);
-          }
+        } else if (data[key] !== undefined && data[key] !== null) {
+          formData.append(key, data[key]);
         }
       }
 
@@ -49,6 +58,7 @@ export default function CreateEventPage() {
       alert("Failed to create event. Please try again.");
     }
   };
+
   return (
     <div data-theme="light" className="">
       <div className="container mx-auto p-2">
@@ -242,20 +252,61 @@ export default function CreateEventPage() {
               <label className="block text-sm font-medium mb-1">
                 Event Cover Photo *
               </label>
-              <input
-                type="file"
-                className="w-full p-2 border rounded"
-                accept="image/*"
-                {...register("coverPhoto", {
-                  required: "Cover photo is required",
-                })}
-              />
+              <div className="flex space-x-4 mb-2">
+                <label className="inline-flex items-center">
+                  <input
+                    type="radio"
+                    {...register("coverPhotoType", {
+                      required: "Please select a cover photo type",
+                    })}
+                    className="mr-2"
+                    value="file"
+                  />
+                  Upload File
+                </label>
+                <label className="inline-flex items-center">
+                  <input
+                    type="radio"
+                    {...register("coverPhotoType")}
+                    className="mr-2"
+                    value="url"
+                  />
+                  Image URL
+                </label>
+              </div>
+              {coverPhotoType === "file" ? (
+                <input
+                  type="file"
+                  className="w-full p-2 border rounded"
+                  accept="image/*"
+                  {...register("coverPhotoFile", {
+                    required:
+                      coverPhotoType === "file" ? "Cover photo is required" : false,
+                  })}
+                />
+              ) : (
+                <input
+                  type="url"
+                  className="w-full p-2 border rounded"
+                  placeholder="https://..."
+                  {...register("coverPhotoUrl", {
+                    required:
+                      coverPhotoType === "url" ? "Image URL is required" : false,
+                    pattern: {
+                      value: /^https?:\/\/.+/,
+                      message: "Please enter a valid URL",
+                    },
+                  })}
+                />
+              )}
               <p className="text-xs text-gray-500 mt-1">
                 Recommended size: 1200x630 pixels
               </p>
-              {errors.coverPhoto && (
+              {(errors.coverPhotoFile || errors.coverPhotoUrl || errors.coverPhotoType) && (
                 <p className="text-red-500 text-xs mt-1">
-                  {errors.coverPhoto.message}
+                  {errors.coverPhotoFile?.message ||
+                    errors.coverPhotoUrl?.message ||
+                    errors.coverPhotoType?.message}
                 </p>
               )}
             </div>
