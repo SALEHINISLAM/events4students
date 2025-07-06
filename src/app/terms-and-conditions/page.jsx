@@ -285,10 +285,10 @@ export default function TermsPage() {
               <p className="text-gray-600">
                 If you have questions about these Terms, please contact us at{" "}
                 <a
-                  href="mailto:support@events4students.com"
+                  href="mailto:msionlinekingdom@gmail.com"
                   className="text-blue-500 hover:underline"
                 >
-                  support@events4students.com
+                  msionlinekingdom@gmail.com
                 </a>
                 .
               </p>

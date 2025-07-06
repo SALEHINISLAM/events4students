@@ -4,6 +4,7 @@ import PublicNavbar from "@/components/PublicPageComponents/PublicNavbar";
 import { GoogleTagManager } from '@next/third-parties/google'
 import PublicFooter from "@/components/PublicPageComponents/PublicFooter";
 import Head from "next/head";
+import { Analytics } from "@vercel/analytics/next"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -44,7 +45,8 @@ export default function RootLayout({ children }) {
         </Head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      > 
+      >
+        <Analytics />
         <GoogleTagManager gtmId={process.env.NEXT_Google_Tag_Manager_ID} />
         <PublicNavbar />
         {children}
