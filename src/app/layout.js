@@ -5,6 +5,7 @@ import { GoogleTagManager } from '@next/third-parties/google'
 import PublicFooter from "@/components/PublicPageComponents/PublicFooter";
 import Head from "next/head";
 import { Analytics } from "@vercel/analytics/next"
+import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -41,8 +42,8 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <Head>
-          <meta name="google-adsense-account" content={process.env.NEXT_Google_Adsense_Account}></meta>
-        </Head>
+        <meta name="google-adsense-account" content={process.env.NEXT_Google_Adsense_Account}></meta>
+      </Head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
@@ -50,6 +51,9 @@ export default function RootLayout({ children }) {
         <GoogleTagManager gtmId={process.env.NEXT_Google_Tag_Manager_ID} />
         <PublicNavbar />
         {children}
+        {/* Adsterra */}
+        <Script async="async" data-cfasync="false" src="//pl27095122.profitableratecpm.com/a43750d471c6a4fde2dc9985fd61b992/invoke.js"></Script>
+        <div id="container-a43750d471c6a4fde2dc9985fd61b992"></div>
         <PublicFooter />
       </body>
     </html>
