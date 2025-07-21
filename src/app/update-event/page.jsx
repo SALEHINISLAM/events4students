@@ -19,7 +19,7 @@ export default function UpdateEventPage() {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      coverPhotoType: "file",
+      coverPhotoType: "url",
     },
   });
 
@@ -451,6 +451,7 @@ export default function UpdateEventPage() {
                     </p>
                   )}
                 </div>
+
               </div>
 
               <div className="bg-white p-6 rounded-lg shadow">

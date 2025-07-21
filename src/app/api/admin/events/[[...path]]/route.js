@@ -113,6 +113,10 @@ export async function PUT(request, { params }) {
       return NextResponse.json({ success: true });
     } else if (endpoint === 'edit' && id) {
       const formData = await request.formData();
+      // Extract files
+      const coverPhotoType = formData.get("coverPhotoType")
+      const coverPhotoFile = formData.get('coverPhotoFile');
+      const coverPhotoUrl = formData.get('coverPhotoUrl');
       const eventData = {
         title: formData.get('eventTitle'),
         description: formData.get('eventDescription'),
@@ -136,21 +140,24 @@ export async function PUT(request, { params }) {
       };
 
       const uploads = [];
-      const coverPhoto = formData.get('coverPhoto');
+      let finalCoverPhotoUrl = null;
       const verificationDocument = formData.get('verificationDocument');
-
-      if (coverPhoto && coverPhoto.size > 0) {
-        uploads.push(uploadToBlob('event-covers', coverPhoto));
+      if (coverPhotoType === 'file' && coverPhotoFile) {
+        uploads.push(uploadToBlob('event-covers', coverPhotoFile));
+      } else if (coverPhotoType === 'url' && coverPhotoUrl) {
+        finalCoverPhotoUrl = coverPhotoUrl;
       }
-      if (verificationDocument && verificationDocument.size > 0) {
+      if (verificationDocument) {
         uploads.push(uploadToBlob('verification-docs', verificationDocument));
       }
 
-      const [coverPhotoUrl, verificationDocUrl] = await Promise.all(uploads);
-
+      const [uploadedCoverPhotoUrl, verificationDocUrl] = await Promise.all(uploads);
+      if (coverPhotoType === "file") {
+        finalCoverPhotoUrl = uploadedCoverPhotoUrl;
+      }
       const updateData = {
         ...eventData,
-        ...(coverPhotoUrl && { coverPhotoUrl }),
+        ...(finalCoverPhotoUrl && { coverPhotoUrl: finalCoverPhotoUrl }),
         ...(verificationDocUrl && { verificationDocUrl }),
       };
 

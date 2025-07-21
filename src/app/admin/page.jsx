@@ -56,9 +56,9 @@ export default function AdminPage() {
 
           {/* Navigation */}
           <div className="tabs mb-8">
-            <a className="tab tab-bordered tab-active">Approve/Modify Events</a>
+            <a className="tab tab-bordered tab-active">Approve Events</a>
             <Link href="/admin/delete" className="tab tab-bordered">
-              Delete Events
+              Delete/Modify Events
             </Link>
           </div>
 

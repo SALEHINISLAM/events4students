@@ -25,7 +25,7 @@ async function uploadToBlob(containerName, file) {
   return blockBlobClient.url;
 }
 
-export async function PUT(request,{params}) {
+export async function PUT(request, { params }) {
   try {
     await mongoClient.connect();
     const db = mongoClient.db();
@@ -40,7 +40,7 @@ export async function PUT(request,{params}) {
     }
 
     // Extract files
-    const coverPhotoType=formData.get("coverPhotoType")
+    const coverPhotoType = formData.get("coverPhotoType")
     const coverPhotoFile = formData.get('coverPhotoFile');
     const coverPhotoUrl = formData.get('coverPhotoUrl');
     const verificationDocument = formData.get('verificationDocument');
@@ -66,8 +66,8 @@ export async function PUT(request,{params}) {
 
     // Upload files to Azure Blob Storage if provided
     const uploads = [];
-    let finalCoverPhotoUrl=null;
-     if (coverPhotoType === 'file' && coverPhotoFile) {
+    let finalCoverPhotoUrl = null;
+    if (coverPhotoType === 'file' && coverPhotoFile) {
       uploads.push(uploadToBlob('event-covers', coverPhotoFile));
     } else if (coverPhotoType === 'url' && coverPhotoUrl) {
       finalCoverPhotoUrl = coverPhotoUrl;
@@ -78,7 +78,7 @@ export async function PUT(request,{params}) {
 
     const [uploadedCoverPhotoUrl, verificationDocUrl] = await Promise.all(uploads);
 
-    if (coverPhotoType==="file") {
+    if (coverPhotoType === "file") {
       finalCoverPhotoUrl = uploadedCoverPhotoUrl;
     }
     // Update event in MongoDB

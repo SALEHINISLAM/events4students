@@ -53,8 +53,8 @@ export default function RootLayout({ children }) {
         {children}
         <PublicFooter />
         {/* Adsterra Ads*/}
-        <Script async="async" data-cfasync="false" src="//pl27095122.profitableratecpm.com/a43750d471c6a4fde2dc9985fd61b992/invoke.js"></Script>
-        <div id="container-a43750d471c6a4fde2dc9985fd61b992"></div>
+        {/* <Script async="async" data-cfasync="false" src="//pl27095122.profitableratecpm.com/a43750d471c6a4fde2dc9985fd61b992/invoke.js"></Script>
+        <div id="container-a43750d471c6a4fde2dc9985fd61b992"></div> */}
       </body>
     </html>
   );
