@@ -99,6 +99,15 @@ export default function DeleteEventsPage() {
                     </p>
                     <p className="text-sm">{event.location}</p>
                     <div className="card-actions justify-end mt-4">
+                      <Link href={`/admin/edit/${event._id}`}>
+                        <motion.button
+                          className="btn btn-secondary btn-sm"
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                        >
+                          Edit
+                        </motion.button>
+                      </Link>
                       <motion.button
                         className="btn btn-error btn-sm"
                         onClick={() => handleDelete(event._id)}

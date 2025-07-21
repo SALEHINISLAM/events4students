@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import RichTextEditor from "@/components/RichTextEditor/TextEditor";
+import Image from "next/image";
 
 export default function UpdateEventPage() {
   const router = useRouter();
@@ -14,9 +15,15 @@ export default function UpdateEventPage() {
     handleSubmit,
     control,
     reset,
+    watch,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      coverPhotoType: "file",
+    },
+  });
 
+  const coverPhotoType = watch("coverPhotoType");
   // Extract event ID from URL
   const extractEventId = (url) => {
     try {
@@ -80,6 +87,15 @@ export default function UpdateEventPage() {
     try {
       const formData = new FormData();
       for (const key of Object.keys(data)) {
+        if (key === "coverPhotoFile" && data.coverPhotoType === "file") {
+          if (data[key] && data[key].length > 0) {
+            formData.append("coverPhoto", data[key][0]);
+          }
+        } else if (key === "coverPhotoUrl" && data.coverPhotoType === "url") {
+          if (data[key]) {
+            formData.append("coverPhoto", data[key]);
+          }
+        }
         if (key === "coverPhoto" || key === "verificationDocument") {
           if (data[key] && data[key].length > 0) {
             formData.append(key, data[key][0]);
@@ -118,7 +134,10 @@ export default function UpdateEventPage() {
         {step === 1 ? (
           <div className="bg-white p-6 rounded-lg shadow">
             <h1 className="text-xl font-semibold mb-4">Update Event</h1>
-            <p className="text-xs">You can update event only if you post it and have the security code that we provide through email.</p>
+            <p className="text-xs">
+              You can update event only if you post it and have the security
+              code that we provide through email.
+            </p>
             <form onSubmit={handleSubmit(verifyEvent)} className="space-y-6">
               <div className="mb-4">
                 <label className="block text-sm font-medium mb-1">
@@ -360,29 +379,77 @@ export default function UpdateEventPage() {
                   />
                 </div>
 
+                {/* cover photo */}
                 <div className="mb-4">
                   <label className="block text-sm font-medium mb-1">
-                    Event Cover Photo
+                    Event Cover Photo *
                   </label>
                   {previewImage && (
                     <div className="mb-4">
-                      <img
+                      <Image
                         src={previewImage}
-                        alt="Cover Preview"
-                        className="max-w-xs rounded"
+                        width={1000}
+                        height={800}
+                        alt="Event Cover Image"
+                        className="max-w-sm rounded"
                       />
                     </div>
                   )}
-                  <input
-                    type="file"
-                    className="w-full p-2 border rounded"
-                    accept="image/*"
-                    {...register("coverPhoto")}
-                    onChange={handleImageChange}
-                  />
+                  <div className="flex space-x-4 mb-2">
+                    <label className="inline-flex items-center">
+                      <input
+                        type="radio"
+                        {...register("coverPhotoType", {
+                          required: "Please select a cover photo type.",
+                        })}
+                        className="mr-2"
+                        value={"file"}
+                      />
+                      Upload File
+                    </label>
+                    <label className="inline-flex items-center">
+                      <input
+                        type="radio"
+                        {...register("coverPhotoType")}
+                        className="mr-2"
+                        value={"url"}
+                        checked
+                      />
+                      Image URL
+                    </label>
+                  </div>
+                  {coverPhotoType === "file" ? (
+                    <input
+                      type="file"
+                      className="w-full p-2 border rounded"
+                      accept="image/*"
+                      {...register("coverPhotoFile")}
+                      onChange={handleImageChange}
+                    />
+                  ) : (
+                    <input
+                      type="url"
+                      className="w-full p-2 border rounded"
+                      placeholder="https://..."
+                      defaultValue={eventData?.coverPhotoUrl}
+                      {...register("coverPhotoUrl", {
+                        pattern: {
+                          value: /^https?:\/\/.+/,
+                          message: "Please enter a valid URL",
+                        },
+                      })}
+                    />
+                  )}
                   <p className="text-xs text-gray-500 mt-1">
                     Recommended size: 1200x630 pixels
                   </p>
+                  {(errors.coverPhotoFile || errors.coverPhotoUrl || errors.coverPhotoType) && (
+                    <p className="text-red-500 text-xs mt-1">
+                      {errors.coverPhotoFile?.message ||
+                        errors.coverPhotoUrl?.message ||
+                        errors.coverPhotoType?.message}
+                    </p>
+                  )}
                 </div>
               </div>
 

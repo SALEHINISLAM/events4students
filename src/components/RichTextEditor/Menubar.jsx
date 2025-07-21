@@ -110,6 +110,7 @@ export default function MenuBar({editor}) {
       {
         options.map((option, index) => (
           <button
+          type='button'
             key={index}
             onClick={option.onClick}
             className={`btn btn-sm ${option.pressed ? 'btn-active' : 'btn-ghost'} ${option.className || ''}`}

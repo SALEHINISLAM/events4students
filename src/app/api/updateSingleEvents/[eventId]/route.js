@@ -40,7 +40,9 @@ export async function PUT(request,{params}) {
     }
 
     // Extract files
-    const coverPhoto = formData.get('coverPhoto');
+    const coverPhotoType=formData.get("coverPhotoType")
+    const coverPhotoFile = formData.get('coverPhotoFile');
+    const coverPhotoUrl = formData.get('coverPhotoUrl');
     const verificationDocument = formData.get('verificationDocument');
 
     // Extract other form data
@@ -64,19 +66,25 @@ export async function PUT(request,{params}) {
 
     // Upload files to Azure Blob Storage if provided
     const uploads = [];
-    if (coverPhoto) {
-      uploads.push(uploadToBlob('event-covers', coverPhoto));
+    let finalCoverPhotoUrl=null;
+     if (coverPhotoType === 'file' && coverPhotoFile) {
+      uploads.push(uploadToBlob('event-covers', coverPhotoFile));
+    } else if (coverPhotoType === 'url' && coverPhotoUrl) {
+      finalCoverPhotoUrl = coverPhotoUrl;
     }
     if (verificationDocument) {
       uploads.push(uploadToBlob('verification-docs', verificationDocument));
     }
 
-    const [coverPhotoUrl, verificationDocUrl] = await Promise.all(uploads);
+    const [uploadedCoverPhotoUrl, verificationDocUrl] = await Promise.all(uploads);
 
+    if (coverPhotoType==="file") {
+      finalCoverPhotoUrl = uploadedCoverPhotoUrl;
+    }
     // Update event in MongoDB
     const updateData = {
       ...eventData,
-      ...(coverPhotoUrl && { coverPhotoUrl }),
+      ...(finalCoverPhotoUrl && { coverPhotoUrl: finalCoverPhotoUrl }),
       ...(verificationDocUrl && { verificationDocUrl }),
     };
 
