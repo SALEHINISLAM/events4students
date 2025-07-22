@@ -26,6 +26,11 @@ const nextConfig = {
                 protocol: 'https',
                 hostname:"drive.google.com",
                 port:"",
+            },
+            {
+                protocol: 'http',
+                hostname:"i.postimg.cc",
+                port:"",
             }
         ]
     }
