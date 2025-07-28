@@ -21,7 +21,7 @@ export default function EventPage() {
       try {
         const response = await fetch(`/api/get-single-event/${id}`);
         const data = await response.json();
-        console.log(data);
+        //console.log(data);
         if (data.success) {
           setEvent(data.event);
         } else {
@@ -228,10 +228,10 @@ export default function EventPage() {
                     {new Date(event.endDate).toLocaleDateString()}
                   </li>
                 )}
-                <li>
+                {/* <li>
                   <strong>Verified Event:</strong>{" "}
                   {event?.isVerified === true ? "Yes" : "No"}
-                </li>
+                </li> */}
               </ul>
 
               <div className="mt-6 space-y-4">
