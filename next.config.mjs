@@ -31,7 +31,12 @@ const nextConfig = {
                 protocol: 'https',
                 hostname:"i.postimg.cc",
                 port:"",
-            }
+            },
+            {
+                protocol: 'https',
+                hostname:"i.ibb.co.com",
+                port:"",
+            },
         ]
     }
 };
