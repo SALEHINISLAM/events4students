@@ -143,7 +143,7 @@ export default function AboutPage() {
                   brainstorming sessions to coding marathons, we built
                   Events4Students to simplify event management and amplify
                   student voices. Inspired by our own experiences juggling
-                  academics and extracurriculars, we created a platform that
+                  academics and extra-curriculars, we created a platform that
                   feels like home—a place where every student can find their
                   moment to connect, learn, and celebrate.
                 </p>
@@ -151,10 +151,10 @@ export default function AboutPage() {
               <div className="md:w-1/2">
                 <Image
                   src="https://lh3.googleusercontent.com/d/1i0dOoct_qiA185n2aAA-ywrXQBx3kaF1"
-                  alt="BUET campus event"
+                  alt="Md. Salehin Islam , Founder of Event4Student"
                   width={600}
                   height={400}
-                  className="rounded-lg shadow-lg object-cover"
+                  className="rounded-lg shadow-lg"
                 />
               </div>
             </div>
@@ -180,8 +180,8 @@ export default function AboutPage() {
             <div className="card bg-base-100 shadow-xl">
               <div className="card-body text-center">
                 <Image
-                  src="https://scontent.fdac99-1.fna.fbcdn.net/v/t39.30808-6/514255581_1261528072309408_3855833943909282553_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeGEusJZnnEGCjasMbmYw56ZXloohwzs3MheWiiHDOzcyFKsTihZ-HVpqCbxiDBoEc3rg3a91IlZ8gL62NHK5QIa&_nc_ohc=bo2V9Q5jU2cQ7kNvwHC9gka&_nc_oc=AdkzWseDBJ_YaHYfojpwqrywendLd7ZWt1NCG3YdWSx7R9Ko2mqwdO_QcvndBrfozd8&_nc_zt=23&_nc_ht=scontent.fdac99-1.fna&_nc_gid=-DgpuwXBIskTWZjouqO5CQ&oh=00_AfO-6YgpKKr9UCCyyKGwrECSkl_-adz6Er8Xd0aY5wi1AQ&oe=686C9CF3"
-                  alt="Team Member"
+                  src="/founder.jpg"
+                  alt="Md. Salehin Islam , Founder of Event4Student"
                   width={150}
                   height={150}
                   className="rounded-full mx-auto mb-4"

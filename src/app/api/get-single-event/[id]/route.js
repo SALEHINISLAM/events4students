@@ -6,7 +6,7 @@ const mongoClient = new MongoClient(process.env.NEXT_MongoURI_KEY);
 const db = mongoClient.db();
 
 export async function GET(request, { params }) {
-    const { id } = params;
+    const { id } = await params;
 
     try {
         await mongoClient.connect();
